@@ -135,6 +135,77 @@ static ThreadNode* _PreNode(ThreadNode* p, ThreadNode* curr)   //Ñ°ÕÒÖ¸¶¨½áµãµÄÇ
           return curr->Ltag == Thread ? curr->lchild : _LastNode(curr->lchild); //ÐèÒª²éÕÒ½ÚµãËùÔÚµÄ×ó×ÓÊ÷µÄ×îºóµÄÓÒ×ÓÊ÷
 }
 
+ThreadNode* Search(BinTree T, ElemType key)               //²éÕÒÄ³Ò»¸ö½áµã
+{
+          return _Search(T.root, key);
+}
+
+static ThreadNode* _Search(ThreadNode* p, ElemType key)        //²éÕÒÄ³Ò»¸ö½áµã×Óº¯Êý
+{
+          ThreadNode* t = p;
+          if (t != NULL)
+          {
+                    for (t = _FirstNode(p); t != NULL; t = _NextNode(p, t))
+                    {
+                              if (t->data == key)
+                              {
+                                        break;
+                              }
+                    }
+          }
+          return t != NULL ? t : NULL;
+}
+
+ThreadNode* FindParent(BinTree T, ThreadNode* curr)                //²éÕÒÄ³Ò»¸ö½áµã¸¸½Úµã
+{
+          return _FindParent(T.root, curr);
+}
+
+static ThreadNode* _FindParent(ThreadNode* p, ThreadNode* curr)       //²éÕÒÄ³Ò»¸ö½áµã¸¸½Úµã×Óº¯Êý
+{
+          if (p == NULL || curr == NULL)
+          {
+                    return NULL;
+          }
+          if (p == curr)
+          {
+                    return p;
+          }
+          else
+          {
+                    if (curr->Ltag == Thread)
+                    {
+                              ThreadNode* t = curr->lchild;
+                              if (t == p->rchild)
+                              {
+                                        return p;
+                              }
+                    }
+                    if (curr->Rtag == Thread)
+                    {
+                              ThreadNode* t = curr->rchild;
+                              if (t == p->lchild)
+                              {
+                                        return p;
+                              }
+                    }
+                    ThreadNode* left = _FirstNode(curr->lchild);
+                    ThreadNode* father = left->lchild;      //Ñ°ÕÒ¸¸½Úµã
+                    if (father != NULL && curr == father->rchild)
+                    {
+                              return father;
+                    }
+
+                    ThreadNode* right = _LastNode(curr->rchild);
+                    father = right->rchild;                  //Ñ°ÕÒ¸¸½Úµã
+                    if (father != NULL && curr == father->lchild)
+                    {
+                              return father;
+                    }
+          }
+
+}
+
 void Inorder(BinTree T) //ÏßË÷¶þ²æÊ÷µÄ±éÀú
 {
           _Inorder(T, T.root);      //µ÷ÓÃ×Óº¯Êý

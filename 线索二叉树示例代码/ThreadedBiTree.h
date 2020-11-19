@@ -46,6 +46,12 @@ static ThreadNode* _NextNode(ThreadNode* p,  ThreadNode* curr);  //Ñ°ÕÒÖ¸¶¨½áµãµ
 ThreadNode* FindPreNode(BinTree T, ThreadNode* curr);              //Ñ°ÕÒÖ¸¶¨½áµãµÄÇ°Çı½áµã
 static ThreadNode* _PreNode(ThreadNode* p, ThreadNode* curr);   //Ñ°ÕÒÖ¸¶¨½áµãµÄÇ°Çı½áµã×Óº¯Êı
 
+ThreadNode* Search(BinTree T, ElemType key);                //²éÕÒÄ³Ò»¸ö½áµã
+static ThreadNode* _Search(ThreadNode* p, ElemType key);        //²éÕÒÄ³Ò»¸ö½áµã×Óº¯Êı
+
+ThreadNode* FindParent(BinTree T, ThreadNode* curr);                //²éÕÒÄ³Ò»¸ö½áµã¸¸½Úµã
+static ThreadNode* _FindParent(ThreadNode* p, ThreadNode* curr);        //²éÕÒÄ³Ò»¸ö½áµã¸¸½Úµã×Óº¯Êı
+
 /*ÏßË÷¶ş²æÊ÷µÄ±éÀú*/
 void Inorder(BinTree T);  //ÏßË÷¶ş²æÊ÷µÄ±éÀú
 static void _Inorder(BinTree T, ThreadNode* p);  //ÏßË÷¶ş²æÊ÷µÄ×Óº¯Êı
