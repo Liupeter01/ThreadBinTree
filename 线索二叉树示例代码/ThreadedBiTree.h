@@ -33,8 +33,19 @@ static void _CreateBinTree(BinTree* T, ThreadNode** p, char** str);     //根据序
 void CreateInThread(BinTree* T);                //创建中序的线索化
 static void _CreateInThread(ThreadNode **pre,ThreadNode**q);        //创建中序的线索化子函数
 
-/*中序线索二叉树的遍历*/
+/*线索二叉树的查找*/
+ThreadNode* FindFirstNode(BinTree T);             //第一个结点
+static ThreadNode* _FirstNode(ThreadNode* p);             //第一个结点子函数
 
-//void Inorder(ThreadNode* T);
-//ThreadNode* FirstNode(ThreadNode* p);
-//ThreadNode* NextNode(ThreadNode* p);
+ThreadNode* FindLastNode(BinTree T);              //最后一个结点
+static ThreadNode* _LastNode(ThreadNode* p);              //最后一个结点子函数
+
+ThreadNode* FindNextNode(BinTree T, ThreadNode* curr);            //寻找指定结点的后继结点
+static ThreadNode* _NextNode(ThreadNode* p,  ThreadNode* curr);  //寻找指定结点的后继子函数
+
+ThreadNode* FindPreNode(BinTree T, ThreadNode* curr);              //寻找指定结点的前驱结点
+static ThreadNode* _PreNode(ThreadNode* p, ThreadNode* curr);   //寻找指定结点的前驱结点子函数
+
+/*线索二叉树的遍历*/
+void Inorder(BinTree T);  //线索二叉树的遍历
+static void _Inorder(BinTree T, ThreadNode* p);  //线索二叉树的子函数

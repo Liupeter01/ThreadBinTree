@@ -71,33 +71,80 @@ static void _CreateInThread(ThreadNode** pre, ThreadNode** q)       //创建中序的
           }
 }
 
+ThreadNode* FindFirstNode(BinTree T)            //第一个结点
+{
+          return _FirstNode(T.root);              //调用子函数
+}
 
-///*中序线索二叉树的遍历*/
-//void Inorder(ThreadNode* T)
-//{
-//          for (ThreadNode* p = FirstNode(T); p != NULL; p = NextNode(p))
-//          {
-//                    printf("%d", p->data);
-//          }
-//}
-//
-//ThreadNode* FirstNode(ThreadNode* p)    //寻找位于最左边的结点
-//{
-//          while (p->ltag == 0)        //左孩子不是线索
-//          {
-//                    p = p->lchild;
-//          }
-//          return p;
-//}
-//
-//ThreadNode* NextNode(ThreadNode* p)
-//{
-//          if (p->rtag == 0)   //右孩子不是线索
-//          {
-//                    return FirstNode(p->rchild);  //继续递归寻找右孩子的左子树
-//          }
-//          else  //右孩子是线索
-//          {
-//                    return p->rchild;   //返回结点的后驱指针
-//          }
-//}
+static ThreadNode* _FirstNode(ThreadNode* p)            //第一个结点子函数
+{
+          ThreadNode* t = p;
+          if (t != NULL)                 //树不为空
+          {
+                    while (t->Ltag!=Thread)
+                    {
+                              t = t->lchild;
+                    }
+          }
+          return t != NULL ? t : NULL;
+}
+
+ThreadNode* FindLastNode(BinTree T)              //寻找最后一个结点
+{
+          return _LastNode(T.root);               //调用子函数
+}
+
+static ThreadNode* _LastNode(ThreadNode* p)             //最后一个结点子函数
+{
+          ThreadNode* t = p;
+          if (t != NULL)                //树不为空
+          {
+                    while (t->Rtag != Thread)
+                    {
+                              t = t->rchild;
+                    }
+          }
+          return t != NULL ? t : NULL;
+}
+
+ThreadNode* FindNextNode(BinTree T, ThreadNode* curr)            //寻找指定结点的后继结点
+{
+          return _NextNode(T.root, curr);         //调用子函数
+}
+
+static ThreadNode* _NextNode(ThreadNode* p, ThreadNode* curr)  //寻找指定结点的后继子函数
+{
+          if (p == NULL || curr == NULL)
+          {
+                    return NULL;
+          }
+          return curr->Rtag == Thread ? curr->rchild : _FirstNode(curr->rchild); //需要查找节点所在的右子树的最后的左子树
+}
+
+ThreadNode* FindPreNode(BinTree T, ThreadNode* curr)              //寻找指定结点的前驱结点
+{
+          return _PreNode(T.root, curr);
+}
+
+static ThreadNode* _PreNode(ThreadNode* p, ThreadNode* curr)   //寻找指定结点的前驱结点子函数
+{
+          if (p == NULL || curr == NULL)
+          {
+                    return NULL;
+          }
+          return curr->Ltag == Thread ? curr->lchild : _LastNode(curr->lchild); //需要查找节点所在的左子树的最后的右子树
+}
+
+void Inorder(BinTree T) //线索二叉树的遍历
+{
+          _Inorder(T, T.root);      //调用子函数
+}
+
+static void _Inorder(BinTree T,ThreadNode* p)  //线索二叉树的子函数
+{
+          for (ThreadNode* first = _FirstNode(p); first != NULL; first = _NextNode(p, first))
+          {
+                    printf("%c ", first->data);
+          }
+          printf("\n");
+}
