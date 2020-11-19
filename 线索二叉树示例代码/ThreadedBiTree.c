@@ -21,7 +21,7 @@ void CreateBinTree(BinTree* T, char* str)                            //¸ù¾ÝÐòÁÐ´
           _CreateBinTree(T, &(T->root), &str);
 }
 
-void _CreateBinTree(BinTree* T,ThreadNode** p, char** str)                         //¸ù¾ÝÐòÁÐ´´½¨¶þ²æÊ÷×Óº¯Êý
+static void _CreateBinTree(BinTree* T,ThreadNode** p, char** str)                         //¸ù¾ÝÐòÁÐ´´½¨¶þ²æÊ÷×Óº¯Êý
 {
           if (**str==T->stopflag)
           {
@@ -41,9 +41,11 @@ void CreateInThread(BinTree* T)               //´´½¨ÖÐÐòµÄÏßË÷»¯
 {
           ThreadNode* pre = NULL;
           _CreateInThread(&pre, &(T->root));                //µ÷ÓÃ¹ý³Ì×Óº¯Êý
+          pre->Rtag = Thread;           //×îºóÒ»¸ö½áµãÒ²ÊÇÏßË÷»¯½áµã
+          pre->rchild = NULL;
 }
 
-void _CreateInThread(ThreadNode** pre, ThreadNode** q)       //´´½¨ÖÐÐòµÄÏßË÷»¯×Óº¯Êý
+static void _CreateInThread(ThreadNode** pre, ThreadNode** q)       //´´½¨ÖÐÐòµÄÏßË÷»¯×Óº¯Êý
 {
           if (*q == NULL)
           {
@@ -51,18 +53,20 @@ void _CreateInThread(ThreadNode** pre, ThreadNode** q)       //´´½¨ÖÐÐòµÄÏßË÷»¯×
           }
           else
           {
-                    _CreateInThread(pre, &((*q)->lchild));            //ÏÈµ÷ÓÃ×ó×ÓÊ÷
+                    _CreateInThread(pre, &((*q)->lchild));         
+                    //ÏÈµ÷ÓÃ×ó×ÓÊ÷Ö±µ½Î»ÓÚ×î×ó±ßµÄÔªËØÎªÖ¹
+                   //×î×ó±ßµÄÔªËØµÄËùÓÐ×æÏÈ½ÚµãÈ«²¿ÈëÕ»
                     if ((*q)->lchild == NULL)                            //Ç°ÇýÁ¬½Ó
                     {
                               (*q)->Ltag = Thread;                    //ÏßË÷»¯
-                              (*q)->lchild = *pre;                      //ÐÞ¸ÄÏßË÷»¯Ö¸Õë
+                              (*q)->lchild = *pre;                      //ÐÞ¸ÄÏßË÷»¯Ö¸ÕëÖ¸ÏòÇ°Çý
                     }
                     if (*pre!=NULL && (*pre)->rchild == NULL)                   //ºó¼ÌÁ¬½Ó
                     {
                               (*pre)->Rtag = Thread;                    //ÏßË÷»¯
-                              (*pre)->rchild = *q;                      //ÐÞ¸ÄÏßË÷»¯Ö¸Õë
+                              (*pre)->rchild = *q;                      //ÐÞ¸ÄÏßË÷»¯Ö¸ÕëÖ¸Ïòºó¼Ì
                     }
-                    *pre = *q;          //¸üÐÂpreµÄÊýÖµ
+                    *pre = *q;          //¸üÐÂpreµÄÊýÖµ½øÐÐµü´ú²Ù×÷
                     _CreateInThread(pre, &((*q)->rchild));            //ºóµ÷ÓÃÓÒ×ÓÊ÷
           }
 }

@@ -14,7 +14,7 @@ typedef struct ThreadNode               //线索化结点
           struct ThreadNode* lchild;    //左孩子
           Tag Rtag;           //右标志位
           Tag Ltag;           //左标志位
-}ThreadNode, * ThreadTree;
+}ThreadNode;
 
 typedef struct BinTree
 {
@@ -24,15 +24,17 @@ typedef struct BinTree
 
 ThreadNode* CreateThreadBinNode(ElemType data);             //结点创建函数
 
-void InitThreadBinTree(BinTree* T, ElemType stopflag);               //二叉树的线索化初始化
+/*普通的二叉树创建函数*/
+void InitThreadBinTree(BinTree* T, ElemType stopflag);               //二叉树的初始化
 void CreateBinTree(BinTree* T, char* str);                                      //根据序列创建二叉树
-void _CreateBinTree(BinTree* T, ThreadNode** p, char** str);     //根据序列创建二叉树子函数
+static void _CreateBinTree(BinTree* T, ThreadNode** p, char** str);     //根据序列创建二叉树子函数
 
+/*二叉树线索化程序*/
 void CreateInThread(BinTree* T);                //创建中序的线索化
-void _CreateInThread(ThreadNode **pre,ThreadNode**q);        //创建中序的线索化子函数
+static void _CreateInThread(ThreadNode **pre,ThreadNode**q);        //创建中序的线索化子函数
 
+/*中序线索二叉树的遍历*/
 
-///*中序线索二叉树的遍历*/
 //void Inorder(ThreadNode* T);
 //ThreadNode* FirstNode(ThreadNode* p);
 //ThreadNode* NextNode(ThreadNode* p);
