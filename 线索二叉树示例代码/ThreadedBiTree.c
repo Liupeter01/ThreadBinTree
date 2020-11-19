@@ -3,6 +3,7 @@
 ThreadNode* CreateThreadBinNode(ElemType data)          //结点创建函数
 {
           ThreadNode* s = (ThreadNode*)malloc(sizeof(ThreadNode));
+          assert(s != NULL);
           s->lchild = s->rchild = NULL;
           s->Ltag = s->Rtag = Link;
           s->data = data;
@@ -36,27 +37,37 @@ void _CreateBinTree(BinTree* T,ThreadNode** p, char** str)                      
           }
 }
 
-///*二叉树的线索化*/
-//void InThread(ThreadTree p, ThreadTree pre)
-//{
-//          if (p != NULL)
-//          {
-//                    InThread(p->lchild, pre);     //先往左边走
-//                    if (p->lchild == NULL)        //结点不存在左孩子
-//                    {
-//                              p->lchild = pre;      //指向前驱结点
-//                              p->ltag = 1;       //更改左标识位
-//                    }
-//                    if (pre!=NULL && pre->rchild == NULL)      //结点不存在右孩子
-//                    {
-//                              pre->rchild = p;     //指向后驱结点
-//                              pre->rtag = 1;       //更改右标识位
-//                    }
-//                    pre = p;	//将旧的结点信息进行记录，方便之后的迭代
-//                    InThread(p->rchild, pre);     //再往右边走(还需要再继续判断是否存在左孩子)
-//          }
-//}
-//
+void CreateInThread(BinTree* T)               //创建中序的线索化
+{
+          ThreadNode* pre = NULL;
+          _CreateInThread(&pre, &(T->root));                //调用过程子函数
+}
+
+void _CreateInThread(ThreadNode** pre, ThreadNode** q)       //创建中序的线索化子函数
+{
+          if (*q == NULL)
+          {
+                    return;
+          }
+          else
+          {
+                    _CreateInThread(pre, &((*q)->lchild));            //先调用左子树
+                    if ((*q)->lchild == NULL)                            //前驱连接
+                    {
+                              (*q)->Ltag = Thread;                    //线索化
+                              (*q)->lchild = *pre;                      //修改线索化指针
+                    }
+                    if (*pre!=NULL && (*pre)->rchild == NULL)                   //后继连接
+                    {
+                              (*pre)->Rtag = Thread;                    //线索化
+                              (*pre)->rchild = *q;                      //修改线索化指针
+                    }
+                    *pre = *q;          //更新pre的数值
+                    _CreateInThread(pre, &((*q)->rchild));            //后调用右子树
+          }
+}
+
+
 ///*中序线索二叉树的遍历*/
 //void Inorder(ThreadNode* T)
 //{
